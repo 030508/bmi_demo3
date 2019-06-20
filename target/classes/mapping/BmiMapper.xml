@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.j1902.mapper.BmiMapper">
+    <resultMap id="bmiMap" type="com.qf.j1902.bean.BmiBean">
+        <!--private  int id; //id
+        private String date; //记录日期
+        private String height;//身高
+        private String weight;//体重
+        private String bmi;//bmi参数
+        private String sign;//日期时间值
+        private String userName;//用户名-->
+        <id property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="height" column="height"/>
+        <result property="weight" column="weight"/>
+        <result property="bmi" column="bmi"/>
+        <result property="sign" column="sign"/>
+        <result property="userName" column="userName"/>
+    </resultMap>
+    <select id="list" resultMap="bmiMap">
+        select * from bmi
+    </select>
+    <delete id="delBmi"      parameterType="com.qf.j1902.bean.BmiBean">
+        delete from bmi where id=#{id}
+    </delete>
+    <select id="maxId" resultType="com.qf.j1902.bean.BmiBean">
+        select max(id) from bmi
+    </select>
+    <select id="bmiBean" resultType="com.qf.j1902.bean.BmiBean">
+         select * from bmi where date=#{date}
+    </select>
+    <insert id="addBmi"  parameterType="com.qf.j1902.bean.BmiBean">
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into bmi (date,height,weight,bmi,sign,userName) values (#{date},#{height},#{weight},#{bmi},#{sign},"aa");
+    </insert>
+</mapper>
